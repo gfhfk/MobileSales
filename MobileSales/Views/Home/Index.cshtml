@@ -1,0 +1,94 @@
+﻿
+<div data-options="dxView : { name: 'routes', title: 'Routes' } ">
+    <div class="route-view" data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxList: { dataSource: routeList }">
+            <div data-options="dxTemplate : { name: 'item' }" data-bind="text: RouteName, dxAction: '#customers/{RouteID}'" />
+        </div>
+    </div>
+</div>
+
+
+<div data-options="dxView : { name: 'customers', title: 'Customers' } ">
+    <div data-bind="dxCommand: { title: 'Search', placeholder: 'Search...', location: 'create', icon: 'find', action: find }"></div>
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxTextBox: { mode: 'search', value: searchString, visible: showSearch, valueUpdateEvent: 'search change keyup' }"></div>
+        <div data-bind="dxList: { dataSource: customerList }">
+            <div data-options="dxTemplate : { name: 'item' } " data-bind="text: CustomerName, dxAction: '#orders/{CustomerID}'" />
+        </div>
+    </div>
+</div>
+
+
+<div data-options="dxView : { name: 'orders', title: 'Orders' } ">
+    <div data-options="dxCommand: { title: 'Create', location: 'create', icon: 'add', action: '#createOrder/{customerID}', showIcon:false }"></div>
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxList: { dataSource: orderList }">
+            <div data-options="dxTemplate : { name: 'item' } " data-bind=" dxAction: '#orderDetails/{CustomerID}'">
+                <div>
+                    <div class="order-date" data-bind="text: Globalize.format(Date(), 'yyyy-MM-dd')"></div>
+                    <div data-bind="text: Globalize.format(TotalSum(), 'c2')"></div>
+                    <div class="order-comment" data-bind="text: Comment"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-options="dxView : { name: 'orderDetails', title:'title' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxList: { dataSource: orderDetailList }">
+            <div data-options="dxTemplate : { name: 'item' } ">
+                <div>
+                    <div class="orderDetails-productName" data-bind="text: ProductName"></div>
+                    <div class="orderDetails-quantity" data-bind="text: Globalize.format(Quantity(), 'n2')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-options="dxView : { name: 'createOrder', title:'New Order' } ">
+    <div data-bind="dxCommand: { title: backBtntext, location: 'cancel', icon: 'remove', behavior: 'back', action: previousStep}"></div>
+    <div data-bind="dxCommand: { title: nextBtntext, location: 'save', icon: 'add', action: nextStep }"></div>
+    
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <!-- ko if: currentStep()==0 -->
+            <div class="dx-fieldset" >
+                <div class="dx-field">
+                    <div class="dx-field-label">Date</div>
+                    <div class="dx-field-value" data-bind="dxDateBox: { value: newOrder().Date, format: 'date' }"></div>
+                </div>
+
+                <div class="dx-field">
+                    <div class="dx-field-label">Delivery date</div>
+                    <div class="dx-field-value" data-bind="dxDateBox: { value: newOrder().DeliveryDate, format: 'date' }"></div>
+                </div>
+
+                <div class="dx-field">
+                    <div class="dx-field-label">Notes</div>
+                    <div class="dx-field-value" data-bind="dxTextArea: { value: newOrder().Comment, rows: 5 }"></div>
+                </div>
+            </div>
+        <!-- /ko -->
+        <!-- ko if: currentStep()==1 -->
+        <div data-bind="dxList: { dataSource: productList }">
+            <div data-options="dxTemplate : { name: 'item' } ">
+                <div>
+                    <div class="orderDetails-productName" data-bind="text: ProductName"></div>
+                    <div class="orderDetails-quantity" data-bind="dxNumberBox:{min:0, max:100, value:Quantity}"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<div data-options="dxView : { name: 'about', title: 'About' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: {}">
+            <p style="padding: 5px">This is my first SPA application.</p>
+        </div>
+    </div>
+</div>
+
+
