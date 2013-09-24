@@ -43,6 +43,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    z-index: 200;
 }
 
 .slideout-layout .layout-frame,
@@ -60,6 +61,7 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 100;
 }
 
 .slideout-layout .nav-patrial-view {
@@ -272,7 +274,7 @@
 /* Windows phone 8 */
 
 .dx-theme-win8 .slideout-layout .layout-content {
-    top: 45px;
+    top: 40px;
     background: #000;
 }
 

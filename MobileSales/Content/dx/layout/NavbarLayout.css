@@ -22,7 +22,8 @@
     overflow: hidden;
 }
 
-.navbar-layout .layout-content > div {
+.navbar-layout .layout-content > div,
+.navbar-layout .transition-frame {
     position: absolute;
     height: 100%;
     width: 100%;

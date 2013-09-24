@@ -65,18 +65,15 @@
     position: absolute;
     bottom: 0;
     margin-bottom: 0;
-
-    -webkit-transition: all .2s;
-    -moz-transition: all .2s;
-    -o-transition: all .2s;
-    transition: all .2s;
 }
 
 .win8phone-layout .dx-toolbar.layout-toolbar-bottom.semi-hidden {
     margin-bottom: -20px;
+}
 
-    -webkit-transition: all .2s;
-    -moz-transition: all .2s;
-    -o-transition: all .2s;
-    transition: all .2s;
+.win8phone-layout .dx-toolbar.layout-toolbar-bottom.with-transition {
+    -webkit-transition: margin-bottom .2s;
+    -moz-transition: margin-bottom .2s;
+    -o-transition: margin-bottom .2s;
+    transition: margin-bottom .2s;
 }

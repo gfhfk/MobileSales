@@ -14,21 +14,21 @@
         },
 
         activate: function() {
+            this.callBase.apply(this, arguments);
             this._navigationManager.navigating.add(this._navigatingHandler);
         },
 
         deactivate: function() {
+            this.callBase.apply(this, arguments);
             this._navigationManager.navigating.remove(this._navigatingHandler);
         },
 
         _onNavigating: function(args) {
             var self = this;
             if(this._isNavigationVisible) {
-                args.cancel = true;
-                this._toggleNavigation(this.$viewPort.children()).done(function() {
+                args.navigateWhen.push(this._toggleNavigation(this.$viewPort.children()).done(function() {
                     self._disableTransitions = true;
-                    self._navigationManager.navigate(args.uri, args.options);
-                });
+                }));
             }
         },
 
@@ -68,6 +68,12 @@
                 viewInfo.renderResult.$markup.find(".layout-content").addClass("has-toolbar-bottom");
             }
 
+            //Q500291
+            var $layoutFrame = this._getLayoutFrame(viewInfo.renderResult.$markup);
+            $layoutFrame.click(function(e) {
+                e.stopPropagation();
+            });
+            
             this.callBase(viewInfo);
         },
 

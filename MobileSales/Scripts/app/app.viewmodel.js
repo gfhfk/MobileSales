@@ -136,7 +136,14 @@ window.MSalesApp.createOrder = function (params) {
         backBtntext: ko.observable('Cancel'),
         nextBtntext: ko.observable('Next'),
         currentStep:ko.observable(0),
-        newOrder:ko.observable(createOrder(params.id)),
+        newOrder: ko.observable(createOrder(params.id)),
+        showSearch: ko.observable(false),
+        productTypeId: ko.observable(0),
+        productTypes: MSalesApp.dataservice.getAllProductTypes(),
+        find: function () {
+            viewModel.showSearch(!viewModel.showSearch());
+            //viewModel.searchString('');
+        },
         productList: {
             load: function (loadOptions) {
                 if (loadOptions.refresh) {
@@ -162,15 +169,18 @@ window.MSalesApp.createOrder = function (params) {
             }
         },
         previousStep: previousStep,
-        nextStep: nextStep
+        nextStep: nextStep,
+        cancelOrder:cancelOrder
     };
-    function previousStep() {
+    
 
-        if (viewModel.currentStep() == 0) {
-            if (!confirm("Are you sure you want to cancel this Oreder?"))
-                return;
-            MSalesApp.app.navigate("orders/" + viewModel.customerID);
-        }
+    function cancelOrder() {
+        if (!confirm("Are you sure you want to cancel this Oreder?"))
+            return;
+        MSalesApp.app.navigate("orders/" + viewModel.customerID);
+
+    }
+    function previousStep() {
         viewModel.currentStep(viewModel.currentStep() - 1);
     };
     function nextStep() {

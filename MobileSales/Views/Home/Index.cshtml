@@ -1,4 +1,13 @@
-﻿
+﻿@*<script type="text/javascript">
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            document.addEventListener("backbutton", onBackButton, false);
+        }
+        function onBackButton() {
+            alert('Back click');
+        };
+</script>*@
+
 <div data-options="dxView : { name: 'routes', title: 'Routes' } ">
     <div class="route-view" data-options="dxContent : { targetPlaceholder: 'content' } ">
         <div data-bind="dxList: { dataSource: routeList }">
@@ -48,8 +57,10 @@
 </div>
 
 <div data-options="dxView : { name: 'createOrder', title:'New Order' } ">
-    <div data-bind="dxCommand: { title: backBtntext, location: 'cancel', icon: 'remove', behavior: 'back', action: previousStep}"></div>
-    <div data-bind="dxCommand: { title: nextBtntext, location: 'save', icon: 'add', action: nextStep }"></div>
+    <div data-bind="dxCommand: { id: 'back', title: 'Orders', location: 'back', type: 'back', action: cancelOrder }"></div>
+    <div data-bind="dxCommand: { title: 'Search', placeholder: 'Search...', location: 'create', icon: 'find', action: find }"></div>
+    <div data-bind="dxCommand: { title: 'Prev', location: 'edit',  action: previousStep, visible: (currentStep()>0) }"></div>
+    <div data-bind="dxCommand: { title: nextBtntext, location: 'save', action: nextStep }"></div>
     
     <div data-options="dxContent : { targetPlaceholder: 'content' } ">
         <!-- ko if: currentStep()==0 -->
@@ -71,11 +82,12 @@
             </div>
         <!-- /ko -->
         <!-- ko if: currentStep()==1 -->
+        <div data-bind="dxLookup: { dataSource: categories, displayExpr: 'name', valueExpr: 'id', value: categoryId }"></div>
         <div data-bind="dxList: { dataSource: productList }">
             <div data-options="dxTemplate : { name: 'item' } ">
                 <div>
                     <div class="orderDetails-productName" data-bind="text: ProductName"></div>
-                    <div class="orderDetails-quantity" data-bind="dxNumberBox:{min:0, max:100, value:Quantity}"></div>
+                    <div class="orderDetails-quantity" data-bind="text: Globalize.format(Quantity(), 'n2')"></div>
                 </div>
             </div>
         </div>

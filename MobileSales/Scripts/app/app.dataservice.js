@@ -16,7 +16,8 @@ window.MSalesApp.dataservice = (function (breeze, logger,model) {
         getOrderDetailsById: getOrderDetailsById,
         getOrderLocally: getOrderLocally,
         createOrder: createOrder,
-        getAllProducts:getAllProducts
+        getAllProducts: getAllProducts,
+        getAllProductTypes: getAllProductTypes
     };
     manager.fetchMetadata()
        .then(function () {
@@ -30,6 +31,13 @@ window.MSalesApp.dataservice = (function (breeze, logger,model) {
 
   
     return dataservice;
+
+
+    function getAllProductTypes() {
+        var query = breeze.EntityQuery.from("ProductTypes").orderBy("ProductTypeID");
+        return manager.executeQuery(query);
+    }
+
 
     function getAllRoutes() {
         var query = breeze.EntityQuery.from("Routes").orderBy("RouteID");
