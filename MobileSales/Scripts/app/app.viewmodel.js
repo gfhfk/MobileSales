@@ -138,17 +138,19 @@ window.MSalesApp.createOrder = function (params) {
         currentStep:ko.observable(0),
         newOrder: ko.observable(createOrder(params.id)),
         showSearch: ko.observable(false),
+        overlayVisible: ko.observable(false),
         productTypeId: ko.observable(0),
-        productTypes: MSalesApp.dataservice.getAllProductTypes(),
+        productTypes: ko.observableArray(),
+        display : ko.observable("0"),
         find: function () {
             viewModel.showSearch(!viewModel.showSearch());
-            //viewModel.searchString('');
+            viewModel.productTypeId(0);
         },
         productList: {
             load: function (loadOptions) {
                 if (loadOptions.refresh) {
                     var deferred = new $.Deferred();
-                    MSalesApp.dataservice.getAllProducts()
+                    MSalesApp.dataservice.getAllProducts(viewModel.productTypeId)
                         .then(function (data) {
                             var mapped = $.map(data.results, function (item) {
                                 return {
@@ -157,6 +159,12 @@ window.MSalesApp.createOrder = function (params) {
                                     Price: item.Price,
                                     ProductTypeID: item.ProductTypeID,
                                     Quantity: ko.observable(0),
+                                    filtered: ko.computed(function () {
+                                        var  ret = true;
+                                        if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
+                                            ret = false;
+                                        return ret;
+                                    }),
                                 }
                             });
                             deferred.resolve(mapped);
@@ -170,9 +178,16 @@ window.MSalesApp.createOrder = function (params) {
         },
         previousStep: previousStep,
         nextStep: nextStep,
-        cancelOrder:cancelOrder
+        cancelOrder: cancelOrder,
+        showOverlay: showOverlay,
+        hideOverlay:hideOverlay,
     };
     
+    MSalesApp.dataservice.getAllProductTypes().
+        then(function (data) {
+            viewModel.productTypes = data.results;
+            viewModel.productTypes.unshift({ProductTypeID:0,ProductTypeName:"All..."});
+        });
 
     function cancelOrder() {
         if (!confirm("Are you sure you want to cancel this Oreder?"))
@@ -204,6 +219,14 @@ window.MSalesApp.createOrder = function (params) {
         }
 
     });
+
+    function showOverlay (data){
+        viewModel.overlayVisible(true);
+    };
+    function hideOverlay() {
+        viewModel.overlayVisible(false);
+    };
+
     return viewModel;
 }
 
