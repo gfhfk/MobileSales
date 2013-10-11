@@ -24,7 +24,7 @@
   border-width: 2px;
   border-style: solid;
   border-radius: 15px;
-  height: 150px;
+  height:фгещ;
   background-color:#5F5F5F;
 }
 .dx-theme-ios .overlayContents{
@@ -46,15 +46,32 @@
  *	### Calculator styles ###
  *  ######################### */
 
+
+.display {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: inset 0 1px 1px #0A0B0D, 0px 1px #5E6370;
+	-webkit-box-shadow: inset 0 1px 1px #0A0B0D, 0px 1px #5E6370;
+	box-shadow: inset 0 1px 1px #0A0B0D, 0px 1px #5E6370;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	background-color: #17181E;
+	border: 1px solid #181A20;
+	padding: 0 10px;
+	text-align: right;
+}
+
 /* Grid units */
-.u1, 
+/*.u1 .dx-widget, 
 .u2,
 .u3,
-.u4 {
+.u4 .dx-widget{
     float: left;
     margin: 3px;
 }
-.u1 {
+.u1 .dx-widget{
     width: 40px;
 }
 .u2 {
@@ -63,7 +80,7 @@
 .u3 {
     width: 132px;
 }
-.u4 {
+.u4 .dx-widget{
     width: 178px;
 }
 
@@ -148,14 +165,16 @@ button::-moz-focus-inner {
 }
 
 /* Buttons styling exceptions */
-.button-backspace  .dx-button{
+.button-backspace  .dx-button-content
+{
 	font-size: 17px;
 	font-weight: normal;
 }
 
 
 /* Button skins */
-.button-gray {
+.button-gray .dx-button-content
+{
 	-moz-box-shadow: inset 0px 1px #9498A3, 0 1px 1px #323643;
 	-webkit-box-shadow: inset 0px 1px #9498A3, 0 1px 1px #323643;
 	box-shadow: inset 0px 1px #9498A3, 0 1px 1px #323643;
@@ -188,7 +207,7 @@ button::-moz-focus-inner {
 		background-image: none;
 		filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 	}
-.button-red {
+.button-red  .dx-button-content{
 	-moz-box-shadow: inset 0px 1px #CA9883, 0 1px 1px #323643;
 	-webkit-box-shadow: inset 0px 1px #CA9883, 0 1px 1px #323643;
 	box-shadow: inset 0px 1px #CA9883, 0 1px 1px #323643;
@@ -253,4 +272,4 @@ button::-moz-focus-inner {
 		background-color: #1E3357;
 		background-image: none;
 		filter: progid:dximagetransform.microsoft.gradient(enabled=false);
-	}
+	}*/
