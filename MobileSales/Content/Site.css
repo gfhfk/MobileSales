@@ -46,16 +46,27 @@
  *	### Calculator styles ###
  *  ######################### */
 
+.calculator {
+     
+}
 .u1 , 
 .u2,
 .u3,
 .u4 {
-    float: left;
-    margin: 3px;
+
 }
-.u1 {
-    width: 40px;
+.calcRow {
+    width:100%;
+     display: table;
+   
 }
+.calcCell {
+    display: table-cell;
+    overflow: hidden;
+	vertical-align: middle;
+     min-width:50px;
+}
+
 .u2 {
     width: 86px;
 }
@@ -95,6 +106,14 @@
 	unicode-bidi: embed;
 
     float: right;
+}
+
+.button {
+    overflow: hidden;
+	vertical-align: middle;
+    display: table-cell;
+    min-width:50px;
+
 }
 /* Grid units */
 /*.u1 .dx-widget, 
