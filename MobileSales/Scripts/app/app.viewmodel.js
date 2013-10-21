@@ -141,6 +141,7 @@ window.MSalesApp.createOrder = function (params) {
         overlayVisible: ko.observable(false),
         productTypeId: ko.observable(0),
         productTypes: ko.observableArray(),
+        currentElemet: ko.observableArray(),
         display : ko.observable("0"),
         find: function () {
             viewModel.showSearch(!viewModel.showSearch());
@@ -180,7 +181,10 @@ window.MSalesApp.createOrder = function (params) {
         nextStep: nextStep,
         cancelOrder: cancelOrder,
         showOverlay: showOverlay,
-        hideOverlay:hideOverlay,
+        hideOverlay: hideOverlay,
+        numberClick: numberClick,
+        backspaceClick: backspaceClick,
+        clearClick: clearClick
     };
     
     MSalesApp.dataservice.getAllProductTypes().
@@ -220,13 +224,31 @@ window.MSalesApp.createOrder = function (params) {
 
     });
 
-    function showOverlay (data){
+    function showOverlay(data) {
+        viewModel.display(String(data.Quantity()));
         viewModel.overlayVisible(true);
+        viewModel.currentElemet = data;
     };
-    function hideOverlay() {
+    function hideOverlay(data) {
+        viewModel.currentElemet.Quantity(viewModel.display());
         viewModel.overlayVisible(false);
     };
-
+    function numberClick(number) {
+        var button = number.element.text();
+        var newValue = (viewModel.display() === "0") ? button : viewModel.display() + button;
+        this.display(newValue);
+    };
+    function clearClick(number) {
+        viewModel.display("0");
+    }
+    function backspaceClick(number) {
+        var self = viewModel;
+        if (this.display().length > 1) {
+            self.display(self.display().substr(0, self.display().length - 1));
+        } else {
+            self.display("0");
+        }
+    }
     return viewModel;
 }
 
