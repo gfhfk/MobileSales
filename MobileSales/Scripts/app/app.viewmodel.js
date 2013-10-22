@@ -150,13 +150,7 @@ window.MSalesApp.createOrder = function (params) {
             viewModel.productTypeId(0);
         },
         productList: ko.observableArray(),
-        totalSum:  ko.computed(function() {
-            var total = 0;
-            for (var p = 0; p < viewModel.productList().length; ++p) {
-                total += viewModel.productList()[p].Sum();
-            };
-            return total;
-        }, this),
+ 
         //productList: {
         //    load: function (loadOptions) {
         //        if (loadOptions.refresh) {
@@ -242,16 +236,28 @@ window.MSalesApp.createOrder = function (params) {
                     return ret;
                 });
                 item.sum = ko.computed(function () {
-                    return Math.round(item.Price * item.Quantity() * 100) / 100;
+                    return Math.round(item.Price() * item.Quantity() * 100) / 100;
                 });
                 return item;
-            }));
 
+            }));
+            viewModel.totalSum = ko.computed(function () {
+                var total = 0;
+                ko.utils.arrayForEach(this.productList(), function (item) {
+                    var value = parseFloat(item.sum());
+                    if (!isNaN(value)) {
+                        total += value;
+                    }
+                });
+                return total.toFixed(2);
+            }, viewModel);
         }).fail(function (error) {
             logger.error("Load data error. Try later.");
             logger.log(error);
         });
 
+
+    
     function cancelOrder() {
         if (!confirm("Are you sure you want to cancel this Oreder?"))
             return;
