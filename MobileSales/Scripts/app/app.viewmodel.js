@@ -127,6 +127,7 @@ window.MSalesApp.orderDetails = function (params) {
 window.MSalesApp.createOrder = function (params) {
     logger = MSalesApp.logger;
     var viewModel = {
+        
         customerID: params.id,
         steps: [
             { text: "New Order" },
@@ -142,41 +143,76 @@ window.MSalesApp.createOrder = function (params) {
         productTypeId: ko.observable(0),
         productTypes: ko.observableArray(),
         currentElemet: ko.observableArray(),
-        display : ko.observable("0"),
+        display: ko.observable("0"),
+        orderDetails: ko.observableArray(),
         find: function () {
             viewModel.showSearch(!viewModel.showSearch());
             viewModel.productTypeId(0);
         },
-        productList: {
-            load: function (loadOptions) {
-                if (loadOptions.refresh) {
-                    var deferred = new $.Deferred();
-                    MSalesApp.dataservice.getAllProducts(viewModel.productTypeId)
-                        .then(function (data) {
-                            var mapped = $.map(data.results, function (item) {
-                                return {
-                                    ProductID: item.ProductID,
-                                    ProductName: item.ProductName,
-                                    Price: item.Price,
-                                    ProductTypeID: item.ProductTypeID,
-                                    Quantity: ko.observable(0),
-                                    filtered: ko.computed(function () {
-                                        var  ret = true;
-                                        if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
-                                            ret = false;
-                                        return ret;
-                                    }),
-                                }
-                            });
-                            deferred.resolve(mapped);
-                        }).fail(function (error) {
-                            logger.error("Load data error. Try later.");
-                            logger.log(error);
-                        });
-                    return deferred;
-                }
-            }
-        },
+        productList: ko.observableArray(),
+        totalSum:  ko.computed(function() {
+            var total = 0;
+            for (var p = 0; p < viewModel.productList().length; ++p) {
+                total += viewModel.productList()[p].Sum();
+            };
+            return total;
+        }, this),
+        //productList: {
+        //    load: function (loadOptions) {
+        //        if (loadOptions.refresh) {
+        //            var deferred = new $.Deferred();
+        //            MSalesApp.dataservice.getAllProducts(viewModel.productTypeId)
+        //                .then(function (data) {
+        //                    var mapped = $.map(data.results, function (item) {
+        //                        item.Quantity = ko.observable(0);
+        //                        item.filtered = ko.computed(function () {
+        //                                var ret = true;
+        //                                if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
+        //                                    ret = false;
+        //                                return ret;
+        //                        });
+        //                        item.sum = ko.computed(function () {
+        //                            return Math.round(item.Price * item.Quantity() * 100) / 100;
+        //                        });
+        //                        return item;
+        //                        //var orderItem = {};
+        //                        //orderItem.ProductID= item.ProductID;
+        //                        //orderItem.ProductName= item.ProductName;
+        //                        //orderItem.Price= item.Price;
+        //                        //orderItem.ProductTypeID=item.ProductTypeID;
+        //                        //orderItem.Quantity= ko.observable(0);
+        //                        //orderItem.filtered = ko.computed(function () {
+        //                        //    var ret = true;
+        //                        //    if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
+        //                        //        ret = false;
+        //                        //    return ret;
+        //                        //});
+        //                        //orderItem.sum = 
+
+        //                        //return {
+        //                        //    ProductID: item.ProductID,
+        //                        //    ProductName: item.ProductName,
+        //                        //    Price: item.Price,
+        //                        //    ProductTypeID: item.ProductTypeID,
+        //                        //    Quantity: ko.observable(0),
+        //                        //    filtered: ko.computed(function () {
+        //                        //        var  ret = true;
+        //                        //        if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
+        //                        //            ret = false;
+        //                        //        return ret;
+        //                        //    }),
+                                    
+        //                        //}
+        //                    });
+        //                    deferred.resolve(mapped);
+        //                }).fail(function (error) {
+        //                    logger.error("Load data error. Try later.");
+        //                    logger.log(error);
+        //                });
+        //            return deferred;
+        //        }
+        //    }
+        //},
         previousStep: previousStep,
         nextStep: nextStep,
         cancelOrder: cancelOrder,
@@ -190,7 +226,30 @@ window.MSalesApp.createOrder = function (params) {
     MSalesApp.dataservice.getAllProductTypes().
         then(function (data) {
             viewModel.productTypes = data.results;
-            viewModel.productTypes.unshift({ProductTypeID:0,ProductTypeName:"All..."});
+            viewModel.productTypes.unshift({ ProductTypeID: 0, ProductTypeName: "All..." });
+        }).fail(function (error) {
+            logger.error("Load data error. Try later.");
+            logger.log(error);
+        });
+    MSalesApp.dataservice.getAllProducts().
+        then(function (data) {
+            viewModel.productList = ko.observableArray( $.map(data.results, function (item) {
+                item.Quantity = ko.observable(0);
+                item.filtered = ko.computed(function () {
+                    var ret = true;
+                    if (viewModel.productTypeId() > 0 && viewModel.productTypeId() != item.ProductTypeID())
+                        ret = false;
+                    return ret;
+                });
+                item.sum = ko.computed(function () {
+                    return Math.round(item.Price * item.Quantity() * 100) / 100;
+                });
+                return item;
+            }));
+
+        }).fail(function (error) {
+            logger.error("Load data error. Try later.");
+            logger.log(error);
         });
 
     function cancelOrder() {
@@ -216,7 +275,8 @@ window.MSalesApp.createOrder = function (params) {
         } else {
             viewModel.backBtntext("Back");
         }
-        if (value == viewModel.steps.length-1) {
+        if (value == viewModel.steps.length - 1) {
+
             viewModel.nextBtntext("Save");
         } else {
             viewModel.nextBtntext("Next");
