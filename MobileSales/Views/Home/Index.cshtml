@@ -95,11 +95,11 @@
         <!-- ko if: currentStep()==2 -->
         <div data-bind="dxLookup: { dataSource: productTypes, displayExpr: 'ProductTypeName', valueExpr: 'ProductTypeID', value: productTypeId, visible: showSearch }"></div>
         <div data-bind="dxList: { dataSource: productList }">
-            <div data-options="dxTemplate : { name: 'item' } " data-bind="visible: filtered, click: function(){ $root.showOverlay($data); } ">
-                <div>
+            <div data-options="dxTemplate : { name: 'item' } " data-bind="visible: Quantity()>0 ">
+                <div class ="dx-field">
                     <div class="orderDetails-productName" data-bind="text: ProductName"></div>
                     <div class="orderDetails-quantity" data-bind="text: Quantity"></div>
-                    <div class="orderDetails-quantity" data-bind="text: Sum"></div>
+                    <div class="orderDetails-sum" data-bind="text: sum"></div>
                 </div>
             </div>
         </div>
