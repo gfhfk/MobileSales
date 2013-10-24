@@ -156,6 +156,13 @@ window.MSalesApp.createOrder = function (params) {
                 total += viewModel.productList()[p].Sum();
             };
             return total;
+
+
+
+
+
+             
+
         }, this),
         //productList: {
         //    load: function (loadOptions) {
