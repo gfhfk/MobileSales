@@ -13,16 +13,18 @@
     float: left; 
 }
 .orderDetails-quantity {
-     display: inline;
-    float: right; 
+    display: inline-block;
+    width: 10%;
+    text-align: right;
 }
 .orderDetails-sum {
-     display: inline;
+    display: inline;
+    width:10%;
     float: right; 
+
 }
-/*.button{
-	margin-top: 25px;
-}*/
+
+
 .overlayContents{
   padding: 10px;
   border-width: 2px;
