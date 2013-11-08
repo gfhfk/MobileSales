@@ -10,6 +10,7 @@
     font-size: 12px;
 }
 .orderDetails-productName {
+    width: 78%;
     float: left; 
 }
 .orderDetails-quantity {
