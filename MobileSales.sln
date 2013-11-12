@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20617.1 PREVIEW
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileSales", "MobileSales\MobileSales.csproj", "{F204AA73-A2C3-4D7A-A078-C804A46BB197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Calculator.csproj", "{341059C8-7C9E-444E-B4EA-F586EB78884E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F204AA73-A2C3-4D7A-A078-C804A46BB197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F204AA73-A2C3-4D7A-A078-C804A46BB197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F204AA73-A2C3-4D7A-A078-C804A46BB197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{341059C8-7C9E-444E-B4EA-F586EB78884E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{341059C8-7C9E-444E-B4EA-F586EB78884E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{341059C8-7C9E-444E-B4EA-F586EB78884E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{341059C8-7C9E-444E-B4EA-F586EB78884E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
