@@ -1,49 +1,57 @@
 ﻿MyApp.home = function (params) {
-
-    var viewModel = {
-        
+    var app = MyApp,
+        self = this;
+    var vm = {
         showSearch: ko.observable(false),
         overlayVisible: ko.observable(false),
         productTypeId: ko.observable(0),
-        productTypes: ko.observableArray(),
+        productTypes: app.productTypes,
         currentElemet: ko.observableArray(),  
         display: ko.observable("0"),
         orderDetails: ko.observableArray(),
         find: function () {
-            viewModel.showSearch(!viewModel.showSearch());
-            viewModel.productTypeId(0);
+            vm.showSearch(!vm.showSearch());
+            vm.productTypeId(0);
         },
-        productList: ko.observableArray(),
-
-        showOverlay: showOverlay,
+         showOverlay: showOverlay,
         hideOverlay: hideOverlay,
         numberClick: numberClick,
         backspaceClick: backspaceClick,
         clearClick: clearClick
     };
+    vm.productList = ko.observableArray($.map(app.products, function (item) {
+          item.Quantity = ko.observable(0);
+        item.filtered = ko.computed(function () {
+            var ret = true;
+            if (vm.productTypeId() > 0 && vm.productTypeId() != item.ProductTypeID)
+                ret = false;
+            return ret;
+        });
+        item.sum = ko.computed(function () {
+            return Math.round(item.Price * item.Quantity() * 100) / 100;
+        });
+        return item;
 
-
-
-
+    }));
     function showOverlay(data) {
-        viewModel.display(String(data.Quantity()));
-        viewModel.overlayVisible(true);
-        viewModel.currentElemet = data;
+        vm.display(String(data.Quantity()));
+        vm.overlayVisible(true);
+        vm.currentElemet = data;
     };
     function hideOverlay(data) {
-        viewModel.currentElemet.Quantity(viewModel.display());
-        viewModel.overlayVisible(false);
+        vm.currentElemet.Quantity(vm.display());
+        vm.overlayVisible(false);
     };
     function numberClick(number) {
         var button = number.element.text();
-        var newValue = (viewModel.display() === "0") ? button : viewModel.display() + button;
+        var newValue = (vm.display() === "0") ? button : vm.display() + button;
         this.display(newValue);
     };
     function clearClick(number) {
-        viewModel.display("0");
+        vm.display("0");
     }
     function backspaceClick(number) {
-        var self = viewModel;
+        var self = vm;
         if (this.display().length > 1) {
             self.display(self.display().substr(0, self.display().length - 1));
         } else {
@@ -51,5 +59,5 @@
         }
     };
 
-    return viewModel;
+    return vm;
 };

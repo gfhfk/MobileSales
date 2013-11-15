@@ -2,11 +2,16 @@
 
 window.MyApp = {};
 
-$(function() {
+$(function () {
+    var devices = DevExpress.devices;
+    var defaultLayout = "slideout";
+    if (devices.current().platform === "desktop") {
+        defaultLayout = "desktop";
+    }
     MyApp.app = new DevExpress.framework.html.HtmlApplication({
         namespace: MyApp,
         
-        defaultLayout: "navbar",
+        defaultLayout: defaultLayout,
         navigation: [
           {
             title: "Home",

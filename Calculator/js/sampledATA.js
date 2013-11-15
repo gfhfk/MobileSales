@@ -1,4 +1,17 @@
 ﻿!function ($, DX, app, undefined) {
+    app.productTypes=[
+        {
+            "ProductTypeID": 1, "ProductTypeName": "Proudct type 1"
+        }, {
+            "ProductTypeID": 2, "ProductTypeName": "Proudct type 2"
+        }, {
+            "ProductTypeID": 3, "ProductTypeName": "Proudct type 3"
+        }, {
+            "ProductTypeID": 4, "ProductTypeName": "Proudct type 4"
+        }, {
+            "ProductTypeID": 5, "ProductTypeName": "Proudct type 5"
+        }
+    ];
     app.products = [
            {
                "ProductID": 1, "ProductName": "Product name 1_0", "Price": "9.99", "ProductTypeID": 1
