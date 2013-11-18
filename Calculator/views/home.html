@@ -8,7 +8,7 @@
             <div class="price">Price</div>
             <div class="quantity">Q-ty</div>
         </div>
-        <div data-bind="dxList: { dataSource: productList }">
+        <div data-bind="dxList: { dataSource: productList}">
             <div data-options="dxTemplate : { name: 'item' } " data-bind="visible: filtered, click: function(){ $root.showOverlay($data); } ">
                 <div>
                     <div class="productName" data-bind="text: ProductName"></div>
@@ -46,8 +46,6 @@
                     <div class="dx-field-value">
                         <div data-bind="dxButton: { text: 'Hide overlay', clickAction: hideOverlay }"></div>
                     </div>
-
-
                 </div>
             </div>
         </div>

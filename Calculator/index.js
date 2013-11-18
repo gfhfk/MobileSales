@@ -3,6 +3,8 @@
 window.MyApp = {};
 
 $(function () {
+    FastClick.attach(document.body);
+
     var devices = DevExpress.devices;
     var defaultLayout = "slideout";
     if (devices.current().platform === "desktop") {
