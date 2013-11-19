@@ -1,2 +1,2 @@
 [config]
-project = MySolution/MyWebProject.csproj
+project = Calculator/Calculator.csproj 
